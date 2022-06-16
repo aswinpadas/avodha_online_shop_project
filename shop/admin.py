@@ -6,5 +6,5 @@ class categAdmin(admin.ModelAdmin):
 class productAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('product_name',)}
 
-admin.site.register(categ,categAdmin)
-admin.site.register(products,productAdmin)
+admin.site.register(Categ,categAdmin)
+admin.site.register(Products,productAdmin)

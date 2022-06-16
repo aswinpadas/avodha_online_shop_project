@@ -1,21 +1,29 @@
 from django.db import models
-
 # Create your models here.
-class categ(models.Model):
+
+
+class Categ(models.Model):
     categName=models.CharField(max_length=250,unique=True)
     slug=models.SlugField(max_length=250,unique=True)
-
     def __str__(self):
         return self.slug
-class products(models.Model):
+class Products(models.Model):
     product_name=models.CharField(max_length=300,unique=True)
     slug = models.SlugField(max_length=400, unique=True)
     product_img=models.ImageField(upload_to='products')
-    desc=models.CharField(max_length=500)
+    product_shot_feature=models.CharField(max_length=100)
+    desc=models.CharField(max_length=1000)
     stock=models.IntegerField()
-    available=models.BooleanField()
+    available=models.BooleanField(default=True)
     price=models.IntegerField()
-    cateName=models.ForeignKey(categ,on_delete=models.CASCADE)
-
+    cateName=models.ForeignKey(Categ,on_delete=models.CASCADE)
     def __str__(self):
+        if(int(self.stock)>0):
+            self.available=True
+            self.save()
+        else:
+            self.available=False
+            self.save()
         return self.slug
+
+
