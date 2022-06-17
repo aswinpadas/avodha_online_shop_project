@@ -2,10 +2,11 @@ from django.db import models
 
 
 # Create your models here.
-class Users(models.Model):
+class UsersDB(models.Model):
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
+    username=models.CharField(max_length=100)
     password = models.CharField(max_length=500)
     dob = models.DateField()
     address = models.CharField(max_length=500)
@@ -18,6 +19,7 @@ class Users(models.Model):
         self.firstname = data.get('firstname')
         self.lastname = data.get('lastanme')
         self.email = data.get('email')
+        self.username=self.email
         self.password = data.get('password')
         self.dob = data.get('dob')
         self.address = data.get('address')

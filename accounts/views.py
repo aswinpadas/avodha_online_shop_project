@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
-
+from shop import views
 # Create your views here.
 import shop.models
-from accounts.models import Users
+from accounts.models import UsersDB
+from shop.views import homePage
 
 
 def signup(req):
@@ -20,7 +21,7 @@ def signup(req):
             'postcode': req.POST.get('postcode'),
             'mob': req.POST.get('mobile'),
         }
-        obj_user = Users(userdata)
+        obj_user = UsersDB(userdata)
         # obj_user.setUserData(userdata)
         # obj_user.save()
         signin(req)
@@ -884,14 +885,13 @@ def districtRender(req):
     return render(req, 'register.html', {'district': district})
 
 
-def signin(req, password=None):
+def signin(req):
     if req.method=='POST':
         email=req.POST.get('email')
         password=req.POST.get('password')
-        obj_val_user=authenticate(req,email,password)
-        if obj_val_user.validateUser(email,password):
-            prod_obj=shop.models.Products()
-            return redirect('/',{'products':prod_obj})
+        user = authenticate(req, email=email, password=password)
+        if user is not None:
+            homePage(req)
         else:
             respone_value='invalid username or password'
             return render(req,'login.html',{'login_response':respone_value})
