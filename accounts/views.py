@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from shop import views
 # Create your views here.
 import shop.models
-from accounts.models import UsersDB
+from accounts.models import CreateUserModel
 from shop.views import homePage
 
 
@@ -21,10 +23,11 @@ def signup(req):
             'postcode': req.POST.get('postcode'),
             'mob': req.POST.get('mobile'),
         }
-        obj_user = UsersDB(userdata)
+        message=CreateUserModel(userdata)
         # obj_user.setUserData(userdata)
         # obj_user.save()
-        signin(req)
+        return HttpResponse(message)
+        # signin(req)
 
     return render(req, 'register.html')
 
@@ -887,12 +890,19 @@ def districtRender(req):
 
 def signin(req):
     if req.method=='POST':
-        email=req.POST.get('email')
+        username=req.POST.get('email')
         password=req.POST.get('password')
-        user = authenticate(req, email=email, password=password)
+        user = authenticate(req, username=username, password=password)
         if user is not None:
-            homePage(req)
+            prod_obj = shop.Products.objects.all()
+            return redirect(req,'/',{'products':prod_obj})
         else:
-            respone_value='invalid username or password'
-            return render(req,'login.html',{'login_response':respone_value})
+            message='invalid username or password'
+            return render(req, 'login.html',{'login_response':message})
     return render(req,'login.html')
+
+
+
+
+
+
