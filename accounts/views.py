@@ -903,6 +903,14 @@ def signin(req):
 
 
 
+def ProductInaccountView(req,user):
+
+    prod_obj = shop.Products.objects.all()
+    for prod in prod_obj:
+        if prod.available == True:
+            print('**************')
+            # del prod_obj[prod]
+    return render(req, 'index.html', {'products': prod_obj,'user':user})
 
 
 

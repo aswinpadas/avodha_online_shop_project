@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 
@@ -31,3 +32,13 @@ class Products(models.Model):
             self.available = False
             self.save()
         return self.slug
+
+
+class Cart(models.Model):
+    id = models.CharField(max_length=100, unique=True,primary_key=True)
+    date = models.DateField()
+    qty = models.IntegerField()
+    product_id = models.ForeignKey(Products, on_delete=models.CASCADE,related_name='product_id')
+
+    def __str__(self):
+        self.date = datetime.date.today()
