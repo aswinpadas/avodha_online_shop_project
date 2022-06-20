@@ -11,9 +11,7 @@ def createCartId(req):
 
 def addToCart(req, slug):
     try:
-
-        cart_obj = Cart()
-        cart_obj.product_id=prod_obj.slug
-        cart_obj.qty=1
-        cart_obj.save()
+        pass
+    except:
+        pass
     return render(req,'cart.html',)
