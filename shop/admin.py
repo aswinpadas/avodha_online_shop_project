@@ -8,3 +8,4 @@ class productAdmin(admin.ModelAdmin):
 
 admin.site.register(Categ,categAdmin)
 admin.site.register(Products,productAdmin)
+admin.site.register(Cart)

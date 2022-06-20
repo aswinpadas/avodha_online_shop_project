@@ -5,6 +5,6 @@ urlpatterns=[
     path('',views.homePage,name='homePage'),
     path('product_details/<str:slug>/',views.productDetails,name='product_details'),
     path('product_details/<str:slug>/',views.productDetails,name='product_details'),
-    path('cart/<str:slug>/',views.addToCart,name='cart'),
+
 
 ]

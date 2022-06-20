@@ -20,8 +20,5 @@ def productDetails(req, slug):
     return render(req, 'product_details.html', {'products': product_obj, 'categ': cat})
 
 
-def addToCart(req, productid):
-    cart_obj = Cart(product_id=productid,qty=1)
-    cart_obj.save()
-    return render(req,'cart.html',)
+
 
