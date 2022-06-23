@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from shop.models import *
 from django.db import models
 
 # Create your models here.
@@ -7,13 +7,17 @@ from django.db.models import CASCADE
 from shop.models import Products, Categ
 
 
-class cart(models.Model):
-    cart_id=models.CharField(max_length=300,unique=True)
-    date=models.DateField(auto_now_add=True)
-    product_name=models.CharField(max_length=300)
-    categName=models.ForeignKey(Categ,on_delete=CASCADE)
-    product_qty=models.IntegerField()
-    product_id=models.ForeignKey(Products,on_delete=CASCADE)
+class CartModel(models.Model):
+    cart_id = models.CharField(max_length=200)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.cart_id
+        return  self.cart_id
+
+class CartItemModel(models.Model):
+    prod = models.ForeignKey(Products,on_delete=models.CASCADE)
+    cart = models.ForeignKey(CartModel,on_delete=models.CASCADE)
+    qty = models.IntegerField()
+
+    def __str__(self):
+        return self.prod
